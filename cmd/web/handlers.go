@@ -46,15 +46,24 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Display a specific snippet ID %d", id)
 }
 
-func (app *application) snippetCreate(w http.ResponseWriter, r *http.Request) {
+func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		w.Header().Set("Allow", "POST")
 		http.Error(w, "method Not Allowed", 405)
 		return
 	}
 
-	fmt.Fprintf(w, "Create a new snippet")
+	title := "o Shall"
+	content := "O snail\nClimb Mount Fuji"
+	expires := "7"
 
+	id, err := app.snippets.Insert(title, content, expires)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	http.Redirect(w, r, fmt.Sprintf("/snippet?id=%d", id), http.StatusSeeOther)
 }
 
 func (app *application) downloadHandler(w http.ResponseWriter, r *http.Request) {
