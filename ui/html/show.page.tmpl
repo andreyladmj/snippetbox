@@ -4,14 +4,16 @@
 
 {{define "body"}}
     <div class="snippet">
+        {{with .Snippet}}
         <div class="metadata">
-            <strong>{{.Snippet.Title}}</strong>
-            <span>#{{.Snippet.ID}}</span>
+            <strong>{{.Title}}</strong>
+            <span>#{{.ID}}</span>
         </div>
-        <pre><code>{{.Snippet.Content}}</code></pre>
+        <pre><code>{{.Content}}</code></pre>
         <metadata>
-            <time>Created: {{.Snippet.Created}}</time>
-            <time>Expires: {{.Snippet.Expires}}</time>
+            <time>Created: {{humanDate .Created}}</time>
+            <time>{{.Expires | humanDate | printf "Expires: %s"}}</time>
         </metadata>
+        {{end}}
     </div>
 {{end}}
