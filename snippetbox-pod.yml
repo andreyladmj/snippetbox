@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: snippetbox-app-pod
+  labels:
+    name: snippetbox-app-pod
+    app: snippetbox-app
+
+spec:
+  containers:
+    - name: snippetbox-app
+      image: snippetbox
